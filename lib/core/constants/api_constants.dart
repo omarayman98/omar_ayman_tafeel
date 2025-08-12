@@ -1,4 +1,4 @@
-class ApiConstants{
-  static const baseUrl = 'https://api.deira.app/api/v1/';
-
+class ApiConstants {
+  static const baseUrl = 'https://reqres.in/api/';
+  static String allUsers = 'users';
 }

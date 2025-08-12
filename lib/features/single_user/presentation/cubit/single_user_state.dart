@@ -1,20 +1,20 @@
 part of 'single_user_cubit.dart';
 
 @immutable
-sealed class UsersState {}
+sealed class SingleUserState {}
 
-final class UsersInitial extends UsersState {}
+final class SingleUserInitial extends SingleUserState {}
 
-final class UsersLoading extends UsersState {}
+final class SingleUserLoading extends SingleUserState {}
 
-final class GetUsersSuccess extends UsersState {
+final class GetSingleUserSuccess extends SingleUserState {
   final SingleUserResponse response;
 
-  GetUsersSuccess(this.response);
+  GetSingleUserSuccess(this.response);
 }
 
-final class GetUsersFailed extends UsersState {
+final class GetSingleUserFailed extends SingleUserState {
   final String error;
 
-  GetUsersFailed({required this.error});
+  GetSingleUserFailed({required this.error});
 }

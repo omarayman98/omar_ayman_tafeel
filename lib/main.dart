@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: AppColors.backgroundColor,
             ),
           ),
-          home: const UsersScreen(),
+          home: UsersScreen(),
         );
       },
     );
