@@ -58,10 +58,10 @@ class UserDetailsScreen extends StatelessWidget {
                     color: Colors.blue.shade700,
                   ),
                 ),
-                SizedBox(height: 0.5.h),
+                SizedBox(height: 1.h),
                 Text(
                   'ID: 12341',
-                  style: TextStyle(fontSize: 9.sp, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 12.sp, color: Colors.grey.shade600),
                 ),
               ],
             ),
