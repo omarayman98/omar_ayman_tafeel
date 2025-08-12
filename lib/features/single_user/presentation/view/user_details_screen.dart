@@ -27,16 +27,19 @@ class UserDetailsScreen extends StatelessWidget {
             padding: EdgeInsets.all(16.sp),
             child: Column(
               children: [
-                ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        'https://www.citypng.com/public/uploads/preview/hd-man-user-illustration-icon-transparent-png-701751694974843ybexneueic.png',
-                    width: 30.w,
-                    height: 30.w,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error, color: Colors.red),
+                Hero(
+                  tag: 'tag',
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          'https://www.citypng.com/public/uploads/preview/hd-man-user-illustration-icon-transparent-png-701751694974843ybexneueic.png',
+                      width: 30.w,
+                      height: 30.w,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error, color: Colors.red),
+                    ),
                   ),
                 ),
                 SizedBox(height: 2.h),

@@ -13,16 +13,19 @@ class UserListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: ClipOval(
-        child: CachedNetworkImage(
-          imageUrl: user.avatar,
-          width: 30.sp,
-          height: 30.sp,
-          fit: BoxFit.cover,
-          placeholder: (context, url) =>
-              CircularProgressIndicator(),
-          errorWidget: (context, url, error) =>
-              Icon(Icons.person, color: Colors.grey.shade200),
+      leading: Hero(
+        tag: 'tag',
+        child: ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: user.avatar,
+            width: 30.sp,
+            height: 30.sp,
+            fit: BoxFit.cover,
+            placeholder: (context, url) =>
+                CircularProgressIndicator(),
+            errorWidget: (context, url, error) =>
+                Icon(Icons.person, color: Colors.grey.shade200),
+          ),
         ),
       ),
       title: Text(
