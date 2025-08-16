@@ -21,7 +21,6 @@ class SingleUserCubit extends Cubit<SingleUserState> {
     emit(SingleUserLoading());
     try {
       final user = await provider.getUserById(id);
-
       emit(GetSingleUserSuccess(user));
     } on DioException catch (e) {
       log('get single user error $e');

@@ -19,15 +19,12 @@ class UsersCubit extends Cubit<UsersState> {
   List<UserData> users = [];
   UsersProvider provider = UsersProvider();
   bool isLastPage = false;
-  int pageNum = 0;
+  int pageNum = 1;
 
   getUsers(context, {required int pageNumber}) async {
-    if (pageNumber == 0) emit(UsersLoading());
+    if (pageNumber == 1) emit(UsersLoading());
     try {
       final response = await provider.getUsers(pageNum);
-      log('response ${response.data.length}');
-              users.addAll(response.data);
-
       if (response.page == pageNumber) {
         isLastPage = true;
       } else {

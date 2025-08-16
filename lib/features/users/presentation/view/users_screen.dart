@@ -22,7 +22,7 @@ class UsersScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: BlocProvider(
-          create: (context) => UsersCubit()..getUsers(context, pageNumber: 2),
+          create: (context) => UsersCubit()..getUsers(context, pageNumber: 1),
           child: BlocBuilder<UsersCubit, UsersState>(
             builder: (context, state) {
               if (state is UsersLoading) {

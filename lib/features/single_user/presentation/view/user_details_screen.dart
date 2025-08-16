@@ -7,9 +7,9 @@ import 'package:sizer/sizer.dart';
 import '../cubit/single_user_cubit.dart';
 
 class UserDetailsScreen extends StatelessWidget {
-  final UserData user;
+  final int userId;
 
-  const UserDetailsScreen({super.key, required this.user});
+  const UserDetailsScreen({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -27,118 +27,76 @@ class UserDetailsScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.sp),
-            child: Column(
-              children: [
-                Hero(
-                  tag: 'tag',
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: user.avatar,
-                      width: 30.w,
-                      height: 30.w,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error, color: Colors.red),
-                    ),
-                  ),
+          child:
+              BlocProvider(
+                create: (context) =>
+                    SingleUserCubit()..getSingleUser(context, id: userId),
+                child: BlocBuilder<SingleUserCubit, SingleUserState>(
+                  builder: (context, state) {
+                    if (state is SingleUserLoading) {
+                      return LinearProgressIndicator();
+                    } else if (state is GetSingleUserFailed) {
+                      return Text(
+                        state.error,
+                        style: TextStyle(color: Colors.red, fontSize: 14.sp),
+                      );
+                    } else if (state is GetSingleUserSuccess) {
+                      UserData user = state.response.data;
+                      return Padding(
+                        padding: EdgeInsets.all(16.sp),
+                        child: Column(
+                          children: [
+                            Hero(
+                              tag: 'tag',
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl: user.avatar,
+                                  width: 30.w,
+                                  height: 30.w,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                        Icons.error,
+                                        color: Colors.red,
+                                      ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              '${user.firstName} ${user.lastName}',
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 1.h),
+                            Text(
+                              user.email,
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.blue.shade700,
+                              ),
+                            ),
+                            SizedBox(height: 1.h),
+                            Text(
+                              'ID: ${user.id}',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Center();
+                    }
+                  },
                 ),
-                SizedBox(height: 2.h),
-                Text(
-                  '${user.firstName} ${user.lastName}',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 1.h),
-                Text(
-                  user.email,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: Colors.blue.shade700,
-                  ),
-                ),
-                SizedBox(height: 1.h),
-                Text(
-                  'ID: ${user.id}',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // BlocProvider(
-          //   create: (context) =>
-          //       SingleUserCubit()..getSingleUser(context, id: this.user.id),
-          //   child: BlocBuilder<SingleUserCubit, SingleUserState>(
-          //     builder: (context, state) {
-          //       if (state is SingleUserLoading) {
-          //         return LinearProgressIndicator();
-          //       } else if (state is GetSingleUserFailed) {
-          //         return Text(
-          //           state.error,
-          //           style: TextStyle(color: Colors.red, fontSize: 14.sp),
-          //         );
-          //       } else if (state is GetSingleUserSuccess) {
-          //         UserData user = user;
-          //         return Padding(
-          //           padding: EdgeInsets.all(16.sp),
-          //           child: Column(
-          //             children: [
-          //               Hero(
-          //                 tag: 'tag',
-          //                 child: ClipOval(
-          //                   child: CachedNetworkImage(
-          //                     imageUrl: user.avatar,
-          //                     width: 30.w,
-          //                     height: 30.w,
-          //                     fit: BoxFit.cover,
-          //                     placeholder: (context, url) =>
-          //                         CircularProgressIndicator(),
-          //                     errorWidget: (context, url, error) =>
-          //                         const Icon(Icons.error, color: Colors.red),
-          //                   ),
-          //                 ),
-          //               ),
-          //               SizedBox(height: 2.h),
-          //               Text(
-          //                 '${user.firstName} ${user.lastName}',
-          //                 style: TextStyle(
-          //                   fontSize: 20.sp,
-          //                   fontWeight: FontWeight.bold,
-          //                 ),
-          //               ),
-          //               SizedBox(height: 1.h),
-          //               Text(
-          //                 user.email,
-          //                 style: TextStyle(
-          //                   fontSize: 16.sp,
-          //                   color: Colors.blue.shade700,
-          //                 ),
-          //               ),
-          //               SizedBox(height: 1.h),
-          //               Text(
-          //                 'ID: ${user.id}',
-          //                 style: TextStyle(
-          //                   fontSize: 12.sp,
-          //                   color: Colors.grey.shade600,
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //         );
-          //       } else {
-          //         return Center();
-          //       }
-          //     },
-          //   ),
-          // ),
+              ),
         ),
       ),
     );

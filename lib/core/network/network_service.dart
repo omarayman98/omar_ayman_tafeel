@@ -13,9 +13,7 @@ dynamic getRequestBody(String requestBody) {
 
 Future<Response> getCallService(String? url) async {
   final headers = {
-    HttpHeaders.contentTypeHeader: 'application/json',
-    HttpHeaders.acceptHeader: 'application/json',
-    // HttpHeaders.authorizationHeader: 'Bearer $headerToken',
+    'x-api-key':'reqres-free-v1'
   };
 
   try {
@@ -23,7 +21,6 @@ Future<Response> getCallService(String? url) async {
     final response = await dio.get(
       ApiConstants.baseUrl + url!,
       options: Options(headers: headers),
-      data: getRequestBody(url),
     );
 
 
